@@ -8,7 +8,7 @@ const city = ref("Praha");
 const weatherInfo = ref(null);
 
 function getWeather() {
-  fetch(`${BASE_URL}?q=${city.value}&appid=${API_KEY}`)
+  fetch(`${BASE_URL}?q=${city.value}&units=metric&appid=${API_KEY}`)
     .then((response) => response.json())
     .then((data) => (weatherInfo.value = data));
 }
@@ -32,11 +32,10 @@ onMounted(getWeather);
                     @keyup.enter="getWeather"
                   />
                 </div>
-                <WeatherSummary />
+                <WeatherSummary :weatherInfo="weatherInfo" />
               </div>
             </section>
             <section class="section section-right">
-              // eslint-disable-next-line vue/multi-word-component-names
               <HighLights />
             </section>
           </div>

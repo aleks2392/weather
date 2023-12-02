@@ -1,6 +1,4 @@
-<script setup>
-// eslint-disable-next-line vue/multi-word-component-names
-</script>
+<script setup></script>
 
 <template>
   <div class="section highlights">

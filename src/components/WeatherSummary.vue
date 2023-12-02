@@ -1,17 +1,37 @@
-<script setup></script>
+<script setup>
+import { defineProps } from "vue";
+import { capitalize } from "../utils/index";
+
+const props = defineProps({
+  weatherInfo: {
+    type: [Object, null],
+    required: true,
+  },
+});
+const today = new Date().toLocaleString("en-EN", {
+  weekday: "short",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+</script>
 
 <template>
-  <div class="summary">
+  <div v-if="props.weatherInfo?.weather" class="summary">
     <div
-      style="background-image: url('/src/assets/img/barometer.png')"
+      :style="`background-image: url(./assets/img/weather-main/${props.weatherInfo?.weather[0].description}.png)`"
       class="pic-main"
     ></div>
     <div class="weather">
-      <div class="temp">14 °C</div>
-      <div class="weather-desc text-block">Thunderstorm</div>
+      <div class="temp">{{ Math.round(props.weatherInfo?.main?.temp) }} °C</div>
+      <div class="weather-desc text-block">
+        {{ capitalize(props.weatherInfo?.weather[0].description) }}
+      </div>
     </div>
-    <div class="city text-block">Paris, FR</div>
-    <div class="date text-block">Thu, March 16, 2023</div>
+    <div class="city text-block">
+      {{ props.weatherInfo?.name }}, {{ props.weatherInfo?.sys?.country }},
+    </div>
+    <div class="date text-block">{{ today }}</div>
   </div>
 </template>
 
