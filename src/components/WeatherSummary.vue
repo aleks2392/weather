@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps } from "vue";
 import { capitalize } from "../utils/index";
+import { computed } from "vue";
 
 const props = defineProps({
   weatherInfo: {
@@ -14,12 +15,27 @@ const today = new Date().toLocaleString("en-EN", {
   month: "long",
   day: "numeric",
 });
+const imageUrl = computed(() => {
+  if (
+    props.weatherInfo &&
+    props.weatherInfo.weather &&
+    props.weatherInfo.weather[0]
+  ) {
+    try {
+      return require(`@/assets/img/${props.weatherInfo.weather[0].description}.png`);
+    } catch (e) {
+      console.error("Error loading the image: ", e);
+      return "";
+    }
+  }
+  return "";
+});
 </script>
 
 <template>
   <div v-if="props.weatherInfo?.weather" class="summary">
     <div
-      :style="`background-image: url(./assets/img/weather-main/${props.weatherInfo?.weather[0].description}.png)`"
+      :style="{ backgroundImage: 'url(' + imageUrl + ')' }"
       class="pic-main"
     ></div>
     <div class="weather">
