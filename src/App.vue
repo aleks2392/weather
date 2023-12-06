@@ -1,21 +1,18 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { API_KEY, BASE_URL } from "./constants/index";
+import useWeatherApi from "./utils/composables";
+// import { API_KEY, BASE_URL } from "./constants/index";
 import WeatherSummary from "./components/WeatherSummary.vue";
 import HighLights from "./components/HighLights.vue";
 import CooRds from "./components/CooRds.vue";
 import HumiDity from "./components/HumiDity.vue";
 
-const city = ref("Praha");
-const weatherInfo = ref(null);
+const city = ref("Katar");
+const { weatherInfo, getWeather } = useWeatherApi(city);
 
-function getWeather() {
-  fetch(`${BASE_URL}?q=${city.value}&units=metric&appid=${API_KEY}`)
-    .then((response) => response.json())
-    .then((data) => (weatherInfo.value = data));
-}
-
-onMounted(getWeather);
+onMounted(() => {
+  getWeather();
+});
 </script>
 
 <template>

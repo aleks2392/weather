@@ -34,10 +34,7 @@ const imageUrl = computed(() => {
 
 <template>
   <div v-if="props.weatherInfo?.weather" class="summary">
-    <div
-      :style="{ backgroundImage: 'url(' + imageUrl + ')' }"
-      class="pic-main"
-    ></div>
+    <div :style="`background-image: url(${imageUrl})`" class="pic-main"></div>
     <div class="weather">
       <div class="temp">{{ Math.round(props.weatherInfo?.main?.temp) }} °C</div>
       <div class="weather-desc text-block">
